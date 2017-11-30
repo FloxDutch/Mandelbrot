@@ -37,20 +37,22 @@ namespace Mandelbrot
     {
       var bitMap = new Bitmap(maxWidth, maxHeight);
       Graphics flagGraphics = Graphics.FromImage(bitMap);
+      List<int> mandelbrotGetallen = new List<int>();
+      var whitePixels = 0;
+      var blackPixels = 0;
 
       for(int bitMapX = -maxWidth / 2; bitMapX < maxWidth / 2; bitMapX++)
       {
         for(int bitMapY = -maxHeight / 2; bitMapY < maxHeight / 2; bitMapY++)
         {
-          var x = bitMapX / (maxWidth / 2);
-          var y = bitMapY / (maxHeight / 2);
+          double x = (double)bitMapX / (maxWidth / 2);
+          double y = (double)bitMapY / (maxHeight / 2);
 
-          var a = 0;
-          var b = 0;
-
+          double a = 0;
+          double b = 0;
           int t = 0;
 
-          while(a * a + b * b < 4)
+          while(Math.Sqrt(a * a) + Math.Sqrt(b * b) < 2)
           {
             a = a * a - b * b + x;
             b = 2 * a * b + y;
@@ -60,14 +62,19 @@ namespace Mandelbrot
               break;
             }
           }
+          mandelbrotGetallen.Add(t);
 
+          var locX = maxWidth / 2 + bitMapX;
+          var locY = maxHeight / 2 - bitMapY;
           if(t % 2 != 0)
           {
-            flagGraphics.DrawRectangle(Pens.White, new Rectangle(new Point(maxWidth / 2 + bitMapX, maxHeight / 2 + bitMapY), new Size(1, 1)));
+            flagGraphics.FillRectangle(Brushes.White, new Rectangle(new Point(locX, locY), new Size(1, 1)));
+            whitePixels++;
           }
           else
           {
-            flagGraphics.DrawRectangle(Pens.Black, new Rectangle(new Point(maxWidth / 2 + bitMapX, maxHeight / 2 + bitMapY), new Size(1, 1)));
+            flagGraphics.FillRectangle(Brushes.Black, new Rectangle(new Point(locX, locY), new Size(1, 1)));
+            blackPixels++;
           }
         }
       }

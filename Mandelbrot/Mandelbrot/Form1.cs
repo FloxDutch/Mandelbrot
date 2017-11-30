@@ -10,12 +10,12 @@ using System.Windows.Forms;
 
 namespace Mandelbrot
 {
-    public partial class Form1 : Form
+  public partial class Form1 : Form
+  {
+    public Form1()
     {
-        public Form1()
-        {
-            InitializeComponent();
-        }
+      InitializeComponent();
+    }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -43,5 +43,5 @@ namespace Mandelbrot
                 bittyboi.SetPixel(Convert.ToInt32(a), Convert.ToInt32(b), Color.Black);
             }
         }
-    }
 }
+    }

@@ -15,33 +15,63 @@ namespace Mandelbrot
     public Form1()
     {
       InitializeComponent();
+      CreateBitmapAtRuntime();
     }
 
-        private void button1_Click(object sender, EventArgs e)
+    Point startLocation = new Point(100, 100);
+    private int maxWidth = 500;
+    private int maxHeight = 500;
+
+    PictureBox pictureBox1 = new PictureBox();
+    public void CreateBitmapAtRuntime()
+    {
+      pictureBox1.Size = new Size(maxWidth, maxHeight);
+      pictureBox1.Location = startLocation;
+      this.Controls.Add(pictureBox1);
+
+      Bitmap flag = DrawBitMap();
+      pictureBox1.Image = flag;
+    }
+
+    private Bitmap DrawBitMap()
+    {
+      var bitMap = new Bitmap(maxWidth, maxHeight);
+      Graphics flagGraphics = Graphics.FromImage(bitMap);
+
+      for(int bitMapX = -maxWidth / 2; bitMapX < maxWidth / 2; bitMapX++)
+      {
+        for(int bitMapY = -maxHeight / 2; bitMapY < maxHeight / 2; bitMapY++)
         {
-            Bitmap bittyboi = new Bitmap(pictureBox1.Width, pictureBox1.Height);
-            double a = 0;
-            double b = 0;
-            double x = a;
-            double y = b;
+          var x = bitMapX / (maxWidth / 2);
+          var y = bitMapY / (maxHeight / 2);
 
-            int t;
-            t = 0;
-            do
+          var a = 0;
+          var b = 0;
+
+          int t = 0;
+
+          while(a * a + b * b < 4)
+          {
+            a = a * a - b * b + x;
+            b = 2 * a * b + y;
+            t++;
+            if(t >= 100)
             {
-                x = a * a - b * b + x;
-                y = 2 * a * b + y;
-                t = t++;
-                if (t == 100) break;
-            } while (x * x + y * y < 4);
-            if (t % 2 != 0)
-            {
-                bittyboi.SetPixel(Convert.ToInt32(a), Convert.ToInt32(b), Color.White);
+              break;
             }
-            else
-            {
-                bittyboi.SetPixel(Convert.ToInt32(a), Convert.ToInt32(b), Color.Black);
-            }
+          }
+
+          if(t % 2 != 0)
+          {
+            flagGraphics.DrawRectangle(Pens.White, new Rectangle(new Point(maxWidth / 2 + bitMapX, maxHeight / 2 + bitMapY), new Size(1, 1)));
+          }
+          else
+          {
+            flagGraphics.DrawRectangle(Pens.Black, new Rectangle(new Point(maxWidth / 2 + bitMapX, maxHeight / 2 + bitMapY), new Size(1, 1)));
+          }
         }
-}
+      }
+      return bitMap;
     }
+  }
+}

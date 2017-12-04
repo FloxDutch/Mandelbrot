@@ -24,6 +24,7 @@ namespace Mandelbrot
 
         public void CreateBitmapAtRuntime()
         {
+            kleurComboBox.SelectedIndex = 0;
             Bitmap flag = DrawBitMap();
             mandelbrotPicture.Image = flag;
         }
@@ -148,11 +149,7 @@ namespace Mandelbrot
             return bitMap;
         }
 
-        //Als op GO! wordt gedrukt wordt het figuur aangepast, anders wordt het figuur met standaardwaarden geladen
-        private void button_Click(object sender, EventArgs e)
-        {
-            RefreshBitMap();
-        }
+        
 
         private void mandelbrotPicture_Click(object sender, MouseEventArgs e)
         {
@@ -204,6 +201,14 @@ namespace Mandelbrot
                     }
             }
             RefreshBitMap();
+        }
+
+        private void InputChanged(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                RefreshBitMap();
+            }
         }
     }
 }

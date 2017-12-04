@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.goButton = new System.Windows.Forms.Button();
             this.XmiddenTextBox = new System.Windows.Forms.TextBox();
             this.xLabel = new System.Windows.Forms.Label();
             this.yLabel = new System.Windows.Forms.Label();
@@ -43,16 +42,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.mandelbrotPicture)).BeginInit();
             this.SuspendLayout();
             // 
-            // goButton
-            // 
-            this.goButton.Location = new System.Drawing.Point(634, 37);
-            this.goButton.Name = "goButton";
-            this.goButton.Size = new System.Drawing.Size(90, 37);
-            this.goButton.TabIndex = 1;
-            this.goButton.Text = "GO!";
-            this.goButton.UseVisualStyleBackColor = true;
-            this.goButton.Click += new System.EventHandler(this.button_Click);
-            // 
             // XmiddenTextBox
             // 
             this.XmiddenTextBox.Location = new System.Drawing.Point(73, 16);
@@ -60,6 +49,7 @@
             this.XmiddenTextBox.Size = new System.Drawing.Size(85, 20);
             this.XmiddenTextBox.TabIndex = 2;
             this.XmiddenTextBox.Text = "0";
+            this.XmiddenTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.InputChanged);
             // 
             // xLabel
             // 
@@ -104,6 +94,7 @@
             this.YmiddenTextBox.Size = new System.Drawing.Size(84, 20);
             this.YmiddenTextBox.TabIndex = 7;
             this.YmiddenTextBox.Text = "0";
+            this.YmiddenTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.InputChanged);
             // 
             // schaalTextBox
             // 
@@ -112,6 +103,7 @@
             this.schaalTextBox.Size = new System.Drawing.Size(64, 20);
             this.schaalTextBox.TabIndex = 8;
             this.schaalTextBox.Text = "0.01";
+            this.schaalTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.InputChanged);
             // 
             // maxTextBox
             // 
@@ -120,9 +112,11 @@
             this.maxTextBox.Size = new System.Drawing.Size(64, 20);
             this.maxTextBox.TabIndex = 9;
             this.maxTextBox.Text = "100";
+            this.maxTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.InputChanged);
             // 
             // kleurComboBox
             // 
+            this.kleurComboBox.DisplayMember = "zwart-wit";
             this.kleurComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.kleurComboBox.FormattingEnabled = true;
             this.kleurComboBox.Items.AddRange(new object[] {
@@ -134,7 +128,7 @@
             this.kleurComboBox.Name = "kleurComboBox";
             this.kleurComboBox.Size = new System.Drawing.Size(92, 21);
             this.kleurComboBox.TabIndex = 10;
-            this.kleurComboBox.SelectedIndex = 0;
+            this.kleurComboBox.ValueMember = "zwart-wit";
             this.kleurComboBox.SelectedIndexChanged += new System.EventHandler(this.ColourChanged);
             // 
             // colourLabel
@@ -172,7 +166,6 @@
             this.Controls.Add(this.yLabel);
             this.Controls.Add(this.xLabel);
             this.Controls.Add(this.XmiddenTextBox);
-            this.Controls.Add(this.goButton);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
@@ -183,7 +176,6 @@
         }
 
         #endregion
-        private System.Windows.Forms.Button goButton;
         private System.Windows.Forms.TextBox XmiddenTextBox;
         private System.Windows.Forms.Label xLabel;
         private System.Windows.Forms.Label yLabel;

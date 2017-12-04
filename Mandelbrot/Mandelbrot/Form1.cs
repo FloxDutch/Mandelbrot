@@ -13,7 +13,6 @@ namespace Mandelbrot
 {
     public partial class Form1 : Form
     {
-
         public Form1()
         {
             InitializeComponent();
@@ -54,9 +53,6 @@ namespace Mandelbrot
                     double b = 0;
                     int t = 1;
 
-                    //De gebruiker kan verschillende kleurenschema's kiezen
-                    int selectedIndex = kleurComboBox.SelectedIndex;
-
                     //De gebruiker kan het maximale aantal herhalingen kiezen
                     int maxHerhalingen = Int32.Parse(maxTextBox.Text);
 
@@ -79,32 +75,73 @@ namespace Mandelbrot
                     var locY = maxHeight / 2 - bitMapY;
 
 
-                    if(selectedIndex == 1)
+                    //De gebruiker kan verschillende kleurenschema's kiezen
+                    switch(kleurComboBox.SelectedIndex)
                     {
-                        if(t % 2 != 0)
-                        {
-                            Brush myBrush = new Brushes(new Color(0, 0, 0));
-                            flagGraphics.FillRectangle(, new Rectangle(new Point(locX, locY), new Size(1, 1)));
-                            whitePixels++;
-                        }
-                        else
-                        {
-                            flagGraphics.FillRectangle(Brushes.Blue, new Rectangle(new Point(locX, locY), new Size(1, 1)));
-                            blackPixels++;
-                        }
-                    }
-                    else if(selectedIndex == 0)
-                    {
-                        if(t % 2 != 0)
-                        {
-                            flagGraphics.FillRectangle(Brushes.White, new Rectangle(new Point(locX, locY), new Size(1, 1)));
-                            whitePixels++;
-                        }
-                        else
-                        {
-                            flagGraphics.FillRectangle(Brushes.Black, new Rectangle(new Point(locX, locY), new Size(1, 1)));
-                            blackPixels++;
-                        }
+                        case 0:
+                            {
+                                if(t % 2 != 0)
+                                {
+                                    flagGraphics.FillRectangle(Brushes.White,
+                                        new Rectangle(new Point(locX, locY), new Size(1, 1)));
+                                }
+                                else
+                                {
+                                    flagGraphics.FillRectangle(Brushes.Black,
+                                        new Rectangle(new Point(locX, locY), new Size(1, 1)));
+                                }
+                                break;
+                            }
+                        case 1:
+                            {
+                                if(t % 2 == 0)
+                                {
+                                    SolidBrush brush = new SolidBrush(Color.FromArgb(t <= 255 ? t : 255, 0, 0));
+                                    flagGraphics.FillRectangle(brush,
+                                        new Rectangle(new Point(locX, locY), new Size(1, 1)));
+                                }
+                                else if(t % 5 == 0)
+                                {
+                                    SolidBrush brush = new SolidBrush(Color.FromArgb(0, 0, t <= 255 ? t : 255));
+                                    flagGraphics.FillRectangle(brush,
+                                        new Rectangle(new Point(locX, locY), new Size(1, 1)));
+                                }
+                                else
+                                {
+                                    SolidBrush brush = new SolidBrush(Color.FromArgb(0, (255 - t) < 0 ? 0 : t, 0));
+                                    flagGraphics.FillRectangle(brush,
+                                        new Rectangle(new Point(locX, locY), new Size(1, 1)));
+                                }
+                                break;
+                            }
+                        case 2:
+                            {
+                                if(t % 2 == 0)
+                                {
+                                    SolidBrush brush = new SolidBrush(Color.FromArgb(t <= 255 ? t : 255, (t / 4) <= 255 ? t / 4 : 255, 0));
+                                    flagGraphics.FillRectangle(brush,
+                                        new Rectangle(new Point(locX, locY), new Size(1, 1)));
+                                }
+                                else if(t % 3 == 0)
+                                {
+                                    SolidBrush brush = new SolidBrush(Color.FromArgb(0, 0, t <= 255 ? t : 255));
+                                    flagGraphics.FillRectangle(brush,
+                                        new Rectangle(new Point(locX, locY), new Size(1, 1)));
+                                }
+                                else if(t % 5 == 0)
+                                {
+                                    SolidBrush brush = new SolidBrush(Color.FromArgb(t%200, 0, 0));
+                                    flagGraphics.FillRectangle(brush,
+                                        new Rectangle(new Point(locX, locY), new Size(1, 1)));
+                                }
+                                else
+                                {
+                                    SolidBrush brush = new SolidBrush(Color.FromArgb(t > 255 ? 255 : t, 0, 0));
+                                    flagGraphics.FillRectangle(brush,
+                                        new Rectangle(new Point(locX, locY), new Size(1, 1)));
+                                }
+                                break;
+                            }
                     }
                 }
             }
@@ -135,6 +172,38 @@ namespace Mandelbrot
         {
             Bitmap flag = DrawBitMap();
             mandelbrotPicture.Image = flag;
+        }
+
+        private void ColourChanged(object sender, EventArgs e)
+        {
+            switch(kleurComboBox.SelectedIndex)
+            {
+                case 0:
+                    {
+                        XmiddenTextBox.Text = "0";
+                        YmiddenTextBox.Text = "0";
+                        schaalTextBox.Text = "0.01";
+                        maxTextBox.Text = "100";
+                        break;
+                    }
+                case 1:
+                    {
+                        XmiddenTextBox.Text = "-0.105390625";
+                        YmiddenTextBox.Text = "-0.9244921875";
+                        schaalTextBox.Text = "1.953125E-05";
+                        maxTextBox.Text = "400";
+                        break;
+                    }
+                case 2:
+                    {
+                        XmiddenTextBox.Text = "-0.105390625";
+                        YmiddenTextBox.Text = "-0.9244921875";
+                        schaalTextBox.Text = "1.953125E-05";
+                        maxTextBox.Text = "800";
+                        break;
+                    }
+            }
+            RefreshBitMap();
         }
     }
 }

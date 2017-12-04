@@ -28,28 +28,30 @@
     /// </summary>
     private void InitializeComponent()
     {
-            this.button = new System.Windows.Forms.Button();
+            this.goButton = new System.Windows.Forms.Button();
             this.XmiddenTextBox = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.xLabel = new System.Windows.Forms.Label();
+            this.yLabel = new System.Windows.Forms.Label();
+            this.scaleLabel = new System.Windows.Forms.Label();
+            this.maxLabel = new System.Windows.Forms.Label();
             this.YmiddenTextBox = new System.Windows.Forms.TextBox();
             this.schaalTextBox = new System.Windows.Forms.TextBox();
             this.maxTextBox = new System.Windows.Forms.TextBox();
             this.kleurComboBox = new System.Windows.Forms.ComboBox();
-            this.label5 = new System.Windows.Forms.Label();
+            this.colourLabel = new System.Windows.Forms.Label();
+            this.mandelbrotPicture = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.mandelbrotPicture)).BeginInit();
             this.SuspendLayout();
             // 
-            // button
+            // goButton
             // 
-            this.button.Location = new System.Drawing.Point(634, 37);
-            this.button.Name = "button";
-            this.button.Size = new System.Drawing.Size(90, 37);
-            this.button.TabIndex = 1;
-            this.button.Text = "GO!";
-            this.button.UseVisualStyleBackColor = true;
-            this.button.Click += new System.EventHandler(this.button_Click);
+            this.goButton.Location = new System.Drawing.Point(634, 37);
+            this.goButton.Name = "goButton";
+            this.goButton.Size = new System.Drawing.Size(90, 37);
+            this.goButton.TabIndex = 1;
+            this.goButton.Text = "GO!";
+            this.goButton.UseVisualStyleBackColor = true;
+            this.goButton.Click += new System.EventHandler(this.button_Click);
             // 
             // XmiddenTextBox
             // 
@@ -59,41 +61,41 @@
             this.XmiddenTextBox.TabIndex = 2;
             this.XmiddenTextBox.Text = "0";
             // 
-            // label1
+            // xLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(10, 19);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(57, 13);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "X - midden";
+            this.xLabel.AutoSize = true;
+            this.xLabel.Location = new System.Drawing.Point(10, 19);
+            this.xLabel.Name = "xLabel";
+            this.xLabel.Size = new System.Drawing.Size(57, 13);
+            this.xLabel.TabIndex = 3;
+            this.xLabel.Text = "X - midden";
             // 
-            // label2
+            // yLabel
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(10, 57);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(57, 13);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Y - midden";
+            this.yLabel.AutoSize = true;
+            this.yLabel.Location = new System.Drawing.Point(10, 57);
+            this.yLabel.Name = "yLabel";
+            this.yLabel.Size = new System.Drawing.Size(57, 13);
+            this.yLabel.TabIndex = 4;
+            this.yLabel.Text = "Y - midden";
             // 
-            // label3
+            // scaleLabel
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(208, 20);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(38, 13);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "schaal";
+            this.scaleLabel.AutoSize = true;
+            this.scaleLabel.Location = new System.Drawing.Point(208, 20);
+            this.scaleLabel.Name = "scaleLabel";
+            this.scaleLabel.Size = new System.Drawing.Size(38, 13);
+            this.scaleLabel.TabIndex = 5;
+            this.scaleLabel.Text = "schaal";
             // 
-            // label4
+            // maxLabel
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(208, 58);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(26, 13);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "max";
+            this.maxLabel.AutoSize = true;
+            this.maxLabel.Location = new System.Drawing.Point(208, 58);
+            this.maxLabel.Name = "maxLabel";
+            this.maxLabel.Size = new System.Drawing.Size(26, 13);
+            this.maxLabel.TabIndex = 6;
+            this.maxLabel.Text = "max";
             // 
             // YmiddenTextBox
             // 
@@ -109,7 +111,7 @@
             this.schaalTextBox.Name = "schaalTextBox";
             this.schaalTextBox.Size = new System.Drawing.Size(64, 20);
             this.schaalTextBox.TabIndex = 8;
-            this.schaalTextBox.Text = "1,00";
+            this.schaalTextBox.Text = "0.01";
             // 
             // maxTextBox
             // 
@@ -127,58 +129,69 @@
             "zwart-wit",
             "rood-blauw"});
             this.kleurComboBox.Location = new System.Drawing.Point(390, 19);
-            this.kleurComboBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.kleurComboBox.Margin = new System.Windows.Forms.Padding(2);
             this.kleurComboBox.Name = "kleurComboBox";
             this.kleurComboBox.Size = new System.Drawing.Size(92, 21);
             this.kleurComboBox.TabIndex = 10;
             // 
-            // label5
+            // colourLabel
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(356, 21);
-            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(30, 13);
-            this.label5.TabIndex = 11;
-            this.label5.Text = "kleur";
+            this.colourLabel.AutoSize = true;
+            this.colourLabel.Location = new System.Drawing.Point(356, 21);
+            this.colourLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.colourLabel.Name = "colourLabel";
+            this.colourLabel.Size = new System.Drawing.Size(30, 13);
+            this.colourLabel.TabIndex = 11;
+            this.colourLabel.Text = "kleur";
+            // 
+            // mandelbrotPicture
+            // 
+            this.mandelbrotPicture.Location = new System.Drawing.Point(155, 154);
+            this.mandelbrotPicture.Name = "mandelbrotPicture";
+            this.mandelbrotPicture.Size = new System.Drawing.Size(400, 400);
+            this.mandelbrotPicture.TabIndex = 13;
+            this.mandelbrotPicture.TabStop = false;
+            this.mandelbrotPicture.MouseClick += new System.Windows.Forms.MouseEventHandler(this.mandelbrotPicture_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(734, 711);
-            this.Controls.Add(this.label5);
+            this.Controls.Add(this.mandelbrotPicture);
+            this.Controls.Add(this.colourLabel);
             this.Controls.Add(this.kleurComboBox);
             this.Controls.Add(this.maxTextBox);
             this.Controls.Add(this.schaalTextBox);
             this.Controls.Add(this.YmiddenTextBox);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.maxLabel);
+            this.Controls.Add(this.scaleLabel);
+            this.Controls.Add(this.yLabel);
+            this.Controls.Add(this.xLabel);
             this.Controls.Add(this.XmiddenTextBox);
-            this.Controls.Add(this.button);
+            this.Controls.Add(this.goButton);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.mandelbrotPicture)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
     }
 
         #endregion
-        private System.Windows.Forms.Button button;
+        private System.Windows.Forms.Button goButton;
         private System.Windows.Forms.TextBox XmiddenTextBox;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label xLabel;
+        private System.Windows.Forms.Label yLabel;
+        private System.Windows.Forms.Label scaleLabel;
+        private System.Windows.Forms.Label maxLabel;
         private System.Windows.Forms.TextBox YmiddenTextBox;
         private System.Windows.Forms.TextBox schaalTextBox;
         private System.Windows.Forms.TextBox maxTextBox;
         private System.Windows.Forms.ComboBox kleurComboBox;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label colourLabel;
+        private System.Windows.Forms.PictureBox mandelbrotPicture;
     }
 }
 

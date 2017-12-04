@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,45 +20,35 @@ namespace Mandelbrot
             CreateBitmapAtRuntime();
         }
 
-        Point startLocation = new Point(100, 100);
-        private int maxWidth = 500;
-        private int maxHeight = 500;
+        private int maxWidth = 400;
+        private int maxHeight = 400;
 
-        //We maken een picturebox en een bitmap
-        PictureBox pictureBox1 = new PictureBox();
         public void CreateBitmapAtRuntime()
         {
-            pictureBox1.Size = new Size(maxWidth, maxHeight);
-            pictureBox1.Location = startLocation;
             Bitmap flag = DrawBitMap();
-            pictureBox1.Image = flag;
-            this.Controls.Add(pictureBox1);
+            mandelbrotPicture.Image = flag;
         }
 
         public Bitmap DrawBitMap()
         {
             var bitMap = new Bitmap(maxWidth, maxHeight);
             Graphics flagGraphics = Graphics.FromImage(bitMap);
-            List<int> mandelbrotGetallen = new List<int>();
             var whitePixels = 0;
             var blackPixels = 0;
 
-            for (int bitMapX = -maxWidth / 2; bitMapX < maxWidth / 2; bitMapX++)
+            for(int bitMapX = -maxWidth / 2; bitMapX < maxWidth / 2; bitMapX++)
             {
-                for (int bitMapY = -maxHeight / 2; bitMapY < maxHeight / 2; bitMapY++)
+                for(int bitMapY = -maxHeight / 2; bitMapY < maxHeight / 2; bitMapY++)
                 {
                     //De gebruiker kan zelf een nieuw x en y coördinaat kiezen
-                    double xMidden = 0;
-                    double yMidden = 0;
-                    xMidden = 100 * Double.Parse(XmiddenTextBox.Text);
-                    yMidden = 100 * Double.Parse(YmiddenTextBox.Text);
+                    var xMidden = double.Parse(XmiddenTextBox.Text, CultureInfo.InvariantCulture);
+                    var yMidden = double.Parse(YmiddenTextBox.Text, CultureInfo.InvariantCulture);
 
                     //De gebruiker kan de schaal aanpassen
-                    double schaal = 1;
-                    schaal = Double.Parse(schaalTextBox.Text);
+                    double schaal = double.Parse(schaalTextBox.Text, CultureInfo.InvariantCulture);
 
-                    double x = ((double)bitMapX / (maxWidth / 5) * schaal) + (xMidden);
-                    double y = ((double)bitMapY / (maxHeight / 5) * schaal) - (yMidden);
+                    double x = schaal * bitMapX + xMidden;
+                    double y = schaal * bitMapY + yMidden;
 
                     double a = 0;
                     double b = 0;
@@ -67,11 +58,10 @@ namespace Mandelbrot
                     int selectedIndex = kleurComboBox.SelectedIndex;
 
                     //De gebruiker kan het maximale aantal herhalingen kiezen
-                    int maxHerhalingen = 100;
-                    maxHerhalingen = Int32.Parse(maxTextBox.Text);
-                    
+                    int maxHerhalingen = Int32.Parse(maxTextBox.Text);
+
                     //Berekening van het Mandelgetal
-                    while ((a * a) + (b * b) < 4)
+                    while(a * a + b * b < 4)
                     {
                         var aa = a * a - b * b;
                         var bb = 2 * a * b;
@@ -79,24 +69,22 @@ namespace Mandelbrot
                         a = aa + x;
                         b = bb + y;
 
-
                         t++;
-                        if (t >= maxHerhalingen)
+                        if(t >= maxHerhalingen)
                         {
                             break;
                         }
                     }
-                    mandelbrotGetallen.Add(t);
+                    var locX = maxWidth / 2 + bitMapX;
+                    var locY = maxHeight / 2 - bitMapY;
 
-                    var locX = (maxWidth / 2 + bitMapX);
-                    var locY = (maxHeight / 2 - bitMapY);
-                    
-                
-                    if (selectedIndex == 1)
+
+                    if(selectedIndex == 1)
                     {
-                        if (t % 2 != 0)
+                        if(t % 2 != 0)
                         {
-                            flagGraphics.FillRectangle(Brushes.Red, new Rectangle(new Point(locX, locY), new Size(1, 1)));
+                            Brush myBrush = new Brushes(new Color(0, 0, 0));
+                            flagGraphics.FillRectangle(, new Rectangle(new Point(locX, locY), new Size(1, 1)));
                             whitePixels++;
                         }
                         else
@@ -105,9 +93,9 @@ namespace Mandelbrot
                             blackPixels++;
                         }
                     }
-                    else
+                    else if(selectedIndex == 0)
                     {
-                        if (t % 2 != 0)
+                        if(t % 2 != 0)
                         {
                             flagGraphics.FillRectangle(Brushes.White, new Rectangle(new Point(locX, locY), new Size(1, 1)));
                             whitePixels++;
@@ -117,7 +105,7 @@ namespace Mandelbrot
                             flagGraphics.FillRectangle(Brushes.Black, new Rectangle(new Point(locX, locY), new Size(1, 1)));
                             blackPixels++;
                         }
-                    }               
+                    }
                 }
             }
             return bitMap;
@@ -125,14 +113,28 @@ namespace Mandelbrot
 
         //Als op GO! wordt gedrukt wordt het figuur aangepast, anders wordt het figuur met standaardwaarden geladen
         private void button_Click(object sender, EventArgs e)
-        {                     
-            Bitmap flag = DrawBitMap();
-            pictureBox1.Image = flag;
+        {
+            RefreshBitMap();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void mandelbrotPicture_Click(object sender, MouseEventArgs e)
         {
+            var scale = double.Parse(schaalTextBox.Text, CultureInfo.InvariantCulture);
+            var curX = double.Parse(XmiddenTextBox.Text, CultureInfo.InvariantCulture);
+            var curY = double.Parse(YmiddenTextBox.Text, CultureInfo.InvariantCulture);
+            var xPos = curX + (e.X - maxWidth / 2) * scale;
+            var yPos = curY + (maxWidth / 2 - e.Y) * scale;
+            scale /= 2;
+            XmiddenTextBox.Text = xPos.ToString(CultureInfo.InvariantCulture);
+            YmiddenTextBox.Text = yPos.ToString(CultureInfo.InvariantCulture);
+            schaalTextBox.Text = scale.ToString(CultureInfo.InvariantCulture);
+            RefreshBitMap();
+        }
 
+        private void RefreshBitMap()
+        {
+            Bitmap flag = DrawBitMap();
+            mandelbrotPicture.Image = flag;
         }
     }
 }
